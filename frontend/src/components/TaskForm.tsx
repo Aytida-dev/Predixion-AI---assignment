@@ -21,7 +21,7 @@ type props = {
 
 }
 
-export default function CreateTaskForm({ closeModel, updateTasks }: props) {
+export default function TaskForm({ closeModel, updateTasks }: props) {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {

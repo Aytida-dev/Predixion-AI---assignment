@@ -3,7 +3,7 @@ import { Todo } from "@/type";
 import { Badge } from "./ui/badge";
 import { Skeleton } from "./ui/skeleton";
 
-export default function AllTasks({ filteredTasks, handleTaskClick }: { filteredTasks: Todo[] | null, handleTaskClick: (task: Todo) => void }) {
+export default function TaskList({ filteredTasks, handleTaskClick }: { filteredTasks: Todo[] | null, handleTaskClick: (task: Todo) => void }) {
     if (filteredTasks === null) {
         const array = [1, 2, 3, 4, 5]
         return (

@@ -4,10 +4,10 @@ import Navbar from "./components/Navbar"
 import Filter from "./components/Filter"
 import { PlusIcon } from "lucide-react"
 import { Todo } from "@/type"
-import TaskDescModal from "./components/TaskDescModal"
-import AllTasks from "./components/AllTasks"
+import TaskItem from "./components/TaskItem"
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "./components/ui/dialog"
-import CreateTaskForm from "./components/CreateTaskForm"
+import TaskForm from "./components/TaskForm"
+import TaskList from "./components/TaskList"
 
 export const STATUS = {
   todo: {
@@ -24,36 +24,6 @@ export const STATUS = {
   }
 }
 
-// const demoTodos: Todo[] = [
-//   {
-//     id: 1,
-//     title: "Finish project proposal",
-//     description: "Write up the project proposal and send it to the client.",
-//     status: 'done',
-//     created_at: new Date("2022-09-01")
-//   },
-//   {
-//     id: 2,
-//     title: "Schedule team meeting",
-//     description: "Coordinate with the team to set up a meeting time.",
-//     status: 'in_progress',
-//     created_at: new Date("2021-09-05")
-//   },
-//   {
-//     id: 3,
-//     title: "Buy groceries",
-//     description: "Pick up milk, eggs, and bread from the store.",
-//     status: 'done',
-//     created_at: new Date("2021-09-03")
-//   },
-//   {
-//     id: 4,
-//     title: "Clean the house",
-//     description: "Vacuum, dust, and tidy up the living room and kitchen.",
-//     status: 'todo',
-//     created_at: new Date("2021-09-02")
-//   },
-// ]
 function App() {
   const [tasks, setTasks] = useState<Todo[] | null>(null)
   const [selectedTask, setSelectedTask] = useState<Todo | null>(null)
@@ -152,17 +122,17 @@ function App() {
               Add Task
             </Button>
           </div>
-          <AllTasks filteredTasks={filteredTasks} handleTaskClick={handleTaskClick} />
+          <TaskList filteredTasks={filteredTasks} handleTaskClick={handleTaskClick} />
         </div>
       </main>
-      <TaskDescModal selectedTask={selectedTask as Todo} handleCloseModal={handleCloseModal} updateTasks={updateTask} />
+      <TaskItem selectedTask={selectedTask as Todo} handleCloseModal={handleCloseModal} updateTasks={updateTask} />
       <Dialog open={creatingTask} onOpenChange={closeModel}>
         <DialogContent>
           <DialogTitle>Add Task</DialogTitle>
           <DialogDescription>
             Fill in the details below to create a new task
           </DialogDescription>
-          <CreateTaskForm closeModel={closeModel} updateTasks={updateTask} />
+          <TaskForm closeModel={closeModel} updateTasks={updateTask} />
         </DialogContent>
       </Dialog>
     </div>

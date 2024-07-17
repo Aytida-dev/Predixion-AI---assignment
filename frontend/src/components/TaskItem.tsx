@@ -14,7 +14,7 @@ type props = {
     updateTasks: (id: number, status?: Todo['status']) => void
 }
 
-export default function TaskDescModal({ selectedTask, handleCloseModal, updateTasks }: props) {
+export default function TaskItem({ selectedTask, handleCloseModal, updateTasks }: props) {
     if (selectedTask === null) return null
 
     const [status, setStatus] = useState(selectedTask.status)
