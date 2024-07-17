@@ -7,6 +7,7 @@ import { Button } from "./ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 import { Loader2 } from "lucide-react"
 import { Todo } from "@/type"
+import { Textarea } from "./ui/textarea"
 
 const formSchema = z.object({
     title: z.string().nonempty().max(100),
@@ -67,7 +68,7 @@ export default function CreateTaskForm({ closeModel, updateTasks }: props) {
                     control={form.control}
                     name="title"
                     render={({ field }) => (
-                        <FormItem className="w-full h-12">
+                        <FormItem className="w-full">
                             <FormControl>
                                 <Input placeholder="Title of the task" {...field} />
                             </FormControl>
@@ -80,9 +81,9 @@ export default function CreateTaskForm({ closeModel, updateTasks }: props) {
                     control={form.control}
                     name="description"
                     render={({ field }) => (
-                        <FormItem className="w-full h-12">
+                        <FormItem className="w-full mb-4">
                             <FormControl>
-                                <Input placeholder="Description of task" {...field} />
+                                <Textarea placeholder="Description of task" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -96,7 +97,7 @@ export default function CreateTaskForm({ closeModel, updateTasks }: props) {
                     control={form.control}
                     name="status"
                     render={({ field }) => (
-                        <FormItem className="w-full h-12">
+                        <FormItem className="w-full">
                             <Select value={field.value} onValueChange={field.onChange}>
                                 <FormControl>
                                     <SelectTrigger>
