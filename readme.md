@@ -2,6 +2,12 @@
 
 ## setup
 
+> open a new terminal
+
+```bash
+cd frontend
+```
+
 ```bash
 npm install
 ```
@@ -23,6 +29,12 @@ npm run preview
 ### frontend will be running on http://localhost:5173
 
 # Backend
+
+> open a new terminal
+
+```bash
+cd backend
+```
 
 ## Start the venv
 
