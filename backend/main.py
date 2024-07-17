@@ -9,6 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.future import select
 from datetime import datetime
+from typing import Optional
 
 from models import Task , StatusEnum
 from database import  get_db
@@ -27,6 +28,7 @@ class TaskResponse(BaseModel):
 class CreateTask(BaseModel):
     title : str = Field(... , min_length=1 , max_length=100)
     description : str = Field(... , min_length=1 , max_length=255)
+    status : Optional[StatusEnum]
 
 class UpdateTask(BaseModel):
     status : StatusEnum
