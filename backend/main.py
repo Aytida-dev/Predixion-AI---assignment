@@ -43,6 +43,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/" , status_code=status.HTTP_200_OK)
+async def index():
+    return {"message" : "Welcome to the Task API"}
+
 @app.get("/api/tasks" , response_model=list[TaskResponse],  status_code=status.HTTP_200_OK )
 async def get_tasks(db : db_dependency):
     tasks = await db.execute(select(Task).order_by(Task.created_at.desc()))
