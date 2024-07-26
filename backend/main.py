@@ -70,7 +70,7 @@ async def get_tasks(db : db_dependency  ):
 
 
 @app.post("/api/tasks" , status_code=status.HTTP_201_CREATED)
-async def create_task(task : CreateTask, loginHash : str , db :db_dependency):
+async def create_task(task : CreateTask, db :db_dependency):
    
 
     new_task = Task(**task.dict())
@@ -86,7 +86,7 @@ async def create_task(task : CreateTask, loginHash : str , db :db_dependency):
     return new_task
 
 @app.put("/api/tasks/{task_id}" , status_code=status.HTTP_200_OK)
-async def update_task(body : UpdateTask , task_id : int  , loginHash : str  , db : db_dependency):
+async def update_task(body : UpdateTask , task_id : int   , db : db_dependency):
    
 
     task = await db.get(Task, task_id)
@@ -103,7 +103,7 @@ async def update_task(body : UpdateTask , task_id : int  , loginHash : str  , db
 
     
 @app.delete("/api/tasks/{task_id}" , status_code=status.HTTP_200_OK)
-async def delete_task(task_id : int ,loginHash : str ,db : db_dependency):
+async def delete_task(task_id : int  ,db : db_dependency):
     task = await db.get(Task, task_id)
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
