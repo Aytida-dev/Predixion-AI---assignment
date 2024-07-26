@@ -22,5 +22,14 @@ class Task(Base):
     created_at : Mapped[DateTime] = mapped_column(nullable=False , default=func.now())
     created_at: Mapped[datetime.datetime] = mapped_column(DateTime, nullable=False, default=func.now())
 
+class User(Base):
+    __tablename__ = "user"
+
+    id : Mapped[int] = mapped_column(primary_key=True, index=True, autoincrement=True)
+    username : Mapped[str] = mapped_column(String(100) , nullable=False)
+    number: Mapped[str] = mapped_column(String(100), nullable=False , unique=True)
+    password: Mapped[str] = mapped_column(String(100), nullable=False)
+    loginHash: Mapped[str] = mapped_column(String(100), nullable=True)
+
 
 

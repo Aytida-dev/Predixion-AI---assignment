@@ -8,6 +8,8 @@ import TaskItem from "./components/TaskItem"
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "./components/ui/dialog"
 import TaskForm from "./components/TaskForm"
 import TaskList from "./components/TaskList"
+import { toast, Toaster } from "sonner"
+import Login from "./components/login"
 
 export const STATUS = {
   todo: {
@@ -29,6 +31,7 @@ function App() {
   const [selectedTask, setSelectedTask] = useState<Todo | null>(null)
   const [filter, setFilter] = useState("All")
   const [creatingTask, setCreatingTask] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(false)
 
   async function getAllTasks() {
     try {
@@ -41,8 +44,10 @@ function App() {
       const data = await response.json()
 
       setTasks(data)
+      toast.success("Fetched all tasks")
     } catch (error) {
       console.error(error)
+      toast.error("Failed to fetch tasks")
     }
   }
 
@@ -110,8 +115,18 @@ function App() {
     }
   }, [tasks, filter])
 
+  if (!loggedIn) {
+    return (
+      <>
+        <Login setLogin={setLoggedIn} />
+        <Toaster richColors />
+      </>
+    )
+  }
+
   return (
     <div className="flex flex-col h-screen bg-background">
+      <Toaster richColors />
       <Navbar />
       <main className="flex-1 p-6 flex justify-center bg-secondary">
         <div className="w-full max-w-[1000px]">

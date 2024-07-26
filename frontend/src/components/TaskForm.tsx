@@ -8,11 +8,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { Loader2 } from "lucide-react"
 import { Todo } from "@/type"
 import { Textarea } from "./ui/textarea"
+import { toast } from "sonner"
 
 const formSchema = z.object({
     title: z.string().nonempty().max(100),
     description: z.string().nonempty().max(255),
     status: z.enum(["todo", "in_progress", "done"]),
+    file: z.string().optional()
 })
 
 type props = {
@@ -27,13 +29,15 @@ export default function TaskForm({ closeModel, updateTasks }: props) {
         defaultValues: {
             title: "",
             description: "",
-            status: "todo"
+            status: "todo",
+            file: ""
         },
     })
 
     const loading = form.formState.isSubmitting
 
     async function onSubmit(data: z.infer<typeof formSchema>) {
+        delete data.file
         try {
             const response = await fetch(`${import.meta.env.VITE_API_URL}/tasks`, {
                 method: 'POST',
@@ -50,11 +54,13 @@ export default function TaskForm({ closeModel, updateTasks }: props) {
             const task = await response.json()
             updateTasks(undefined, undefined, task)
             closeModel();
+            toast.success("Task created successfully")
 
         } catch (error: any) {
             console.log(error);
-            alert("Failed to create task")
             closeModel();
+            toast.error("Failed to create task")
+
         }
 
 
@@ -110,6 +116,19 @@ export default function TaskForm({ closeModel, updateTasks }: props) {
                                     <SelectItem value="in_progress">In progress</SelectItem>
                                 </SelectContent>
                             </Select>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <FormField
+                    control={form.control}
+                    name="file"
+                    render={({ field }) => (
+                        <FormItem className="w-full mb-4">
+                            <FormControl>
+                                <Input placeholder="Add file" {...field} type="file" />
+                            </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}

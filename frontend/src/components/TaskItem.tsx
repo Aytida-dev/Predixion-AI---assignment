@@ -7,6 +7,7 @@ import { STATUS } from "@/App"
 import { Badge } from "./ui/badge"
 import { useState } from "react"
 import { Loader2 } from "lucide-react"
+import { toast } from "sonner"
 
 type props = {
     selectedTask: Todo
@@ -20,6 +21,7 @@ export default function TaskItem({ selectedTask, handleCloseModal, updateTasks }
     const [status, setStatus] = useState(selectedTask.status)
     const [saving, setSaving] = useState(false)
     const [deleting, setDeleting] = useState(false)
+    const [deleteConfirmation, setDeleteConfirmation] = useState(false)
 
     async function handleSave() {
         if (status === selectedTask.status) return
@@ -42,8 +44,10 @@ export default function TaskItem({ selectedTask, handleCloseModal, updateTasks }
             updateTasks(selectedTask.id, status)
 
             handleCloseModal()
+            toast.success("Task updated successfully")
         } catch (error) {
             console.error(error)
+            toast.error("Failed to update task")
             setSaving(false)
         }
     }
@@ -63,10 +67,36 @@ export default function TaskItem({ selectedTask, handleCloseModal, updateTasks }
             setDeleting(false)
             updateTasks(selectedTask.id)
             handleCloseModal()
+            toast.success("Task deleted successfully")
         } catch (error) {
             console.error(error)
             setDeleting(false)
+            toast.error("Failed to delete task")
         }
+    }
+
+    if (deleteConfirmation) {
+        return (
+            <Dialog open={deleteConfirmation} onOpenChange={() => setDeleteConfirmation(false)}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Are you sure you want to delete this task?</DialogTitle>
+                    </DialogHeader>
+                    <DialogFooter className="gap-3">
+                        <Button
+                            variant="destructive"
+                            disabled={deleting || saving}
+                            onClick={() => handleDelete()}
+                        >
+                            {
+                                deleting ? <Loader2 className="animate-spin" /> : "Delete"
+                            }
+                        </Button>
+                        <Button onClick={() => setDeleteConfirmation(false)}>Cancel</Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+        )
     }
 
     return (
@@ -108,7 +138,7 @@ export default function TaskItem({ selectedTask, handleCloseModal, updateTasks }
                     <Button
                         variant="destructive"
                         disabled={deleting || saving}
-                        onClick={() => handleDelete()}
+                        onClick={() => setDeleteConfirmation(true)}
                     >
                         {
                             deleting ? <Loader2 className="animate-spin" /> : "Delete"
