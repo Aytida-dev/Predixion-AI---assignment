@@ -37,7 +37,7 @@ export default function Login({ setLogin }: any) {
             }
 
             response = await response.json()
-            toast.success("Registered successfully")
+            toast.success("Logged in successfully")
         } catch (error) {
             console.error(error)
             toast.error("Failed to register")
@@ -71,7 +71,7 @@ export default function Login({ setLogin }: any) {
                         <Input id="password" type="password" placeholder="Enter a password" value={registerPassword} onChange={(e) => setRegisterPassword(e.target.value)} />
                     </div>
                     <Button type="submit" className="w-full" disabled={loading} onClick={register}>
-                        Register
+                        Login
                     </Button>
                 </form>
             </div>

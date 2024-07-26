@@ -51,10 +51,6 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    getAllTasks()
-  }, [])
-
   const handleTaskClick = (task: Todo) => {
     setSelectedTask(task)
   }
@@ -95,6 +91,12 @@ function App() {
 
   }
 
+  useEffect(() => {
+    if (loggedIn) {
+      toast.success("Logged in successfully")
+      getAllTasks()
+    }
+  }, [loggedIn])
 
 
   const filteredTasks = useMemo(() => {
